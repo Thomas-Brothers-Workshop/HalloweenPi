@@ -7,6 +7,9 @@ import random
 pygame.mixer.init()
 from webiopi import deviceInstance
 
+#Macro script 2014
+
+
 # Enable debug output
 webiopi.setDebug()
 
