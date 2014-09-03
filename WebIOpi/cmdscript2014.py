@@ -9,11 +9,6 @@ from webiopi import deviceInstance
 
 # Enable debug output
 
-#A test for adam
-
-#Another test
-
-
 webiopi.setDebug()
 
 # Device setup
