@@ -69,7 +69,7 @@ def IOTEST(cmdString):
   
 @webiopi.macro
 def ChangeTest(TestString):
-  return TestString
+  return TestString + "new"
 
 #Turn all relays on or off
 @webiopi.macro
