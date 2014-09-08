@@ -31,5 +31,5 @@ def destroy():
 
 @webiopi.macro
 def ChangeTest(TestString):
-  return TestString + "new"
+  return TestString + " awesome"
 
