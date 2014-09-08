@@ -7,6 +7,9 @@ import random
 pygame.mixer.init()
 from webiopi import deviceInstance
 
+#Macro script 2014
+
+
 # Enable debug output
 
 webiopi.setDebug()
@@ -62,6 +65,10 @@ def destroy():
 def IOTEST(cmdString):
   testIO()
   return "TEST COMPLETE"
+  
+@webiopi.macro
+def ChangeTest(TestString):
+  return TestString
 
 #Turn all relays on or off
 @webiopi.macro
