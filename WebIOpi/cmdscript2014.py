@@ -64,6 +64,10 @@ def destroy():
 def IOTEST(cmdString):
   testIO()
   return "TEST COMPLETE"
+  
+@webiopi.macro
+def ChangeTest(TestString):
+  return TestString
 
 #Turn all relays on or off
 @webiopi.macro
