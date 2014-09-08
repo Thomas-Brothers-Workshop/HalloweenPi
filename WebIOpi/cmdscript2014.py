@@ -8,6 +8,7 @@ pygame.mixer.init()
 from webiopi import deviceInstance
 
 # Enable debug output
+#something
 
 webiopi.setDebug()
 
