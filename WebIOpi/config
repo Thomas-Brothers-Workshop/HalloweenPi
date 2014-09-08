@@ -23,7 +23,7 @@
 # name = sourcefile
 #   each sourcefile may have setup, loop and destroy functions and macros
 #myscript = /home/pi/webiopi/examples/scripts/macros/script.py
-hallow = /home/pi/Halloween/WebIOpi/cmdscript2014.py
+hallow = /home/pi/Halloween/WebIOpi/test.py
 #------------------------------------------------------------------------#
 
 [HTTP]
