@@ -8,7 +8,7 @@ pygame.mixer.init()
 from webiopi import deviceInstance
 
 #Macro script 2014
-#last
+#last fo realz
 
 # Enable debug output
 #something
