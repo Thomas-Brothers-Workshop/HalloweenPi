@@ -7,15 +7,20 @@ import random
 pygame.mixer.init()
 from webiopi import deviceInstance
 
+# Initial setup and constants
 webiopi.setDebug()
-
-# Device setup
 GPIO = webiopi.GPIO
-relay = deviceInstance("relay")
-#io = deviceInstance("io")
-pwm = deviceInstance("pwm")
 OFF = GPIO.HIGH
 ON = GPIO.LOW
+
+# Relay modual setup
+relay1 = deviceInstance("relay1")
+relay2 = deviceInstance("relay2")
+relay3 = deviceInstance("relay3")
+
+#io = deviceInstance("io")
+pwm = deviceInstance("pwm")
+
 
 #Sound Setup
 soundMain = "/home/pi/Hsounds/"
@@ -106,11 +111,6 @@ def cmd(cmdString):
 #*****
 # Handler functions
 #*****
-def IOevent(argString):
-  argList = argSplit(argString)
-  status = OFF
-  if (argList[1].upper() == "ON"): status = ON
-  threading.Thread(target=IOthread,args=(argList[0],status,argList[2],argList[3],)).start()
 
 def Relayevent(argString):
   argList = argSplit(argString)
@@ -159,23 +159,7 @@ def SoundEvent(argString):
 # Thread functions
 #*****
 #****************************************************************
-#Run thread for IO
-def IOthread(pin,status,sec,delay):
-  inPin = int(pin)-1 
-  #Handle delay in needed
-  if (str(delay) != "0"):
-    webiopi.sleep(float(delay))
-  #Write desired status
-  io.digitalWrite(inPin, status)
-  #If interval needed then wait and toggle
-  if (str(sec) != "0"):
-    webiopi.sleep(float(sec))
-    if (status == ON):
-      io.digitalWrite(inPin, OFF)
-    else:
-      io.digitalWrite(inPin, ON)
 
-#****************************************************************
 #Run thread for Relay      
 def Relaythread(pin,status,sec,delay):
   inPin = int(pin)-1 
@@ -235,6 +219,7 @@ def SoundThread(sound,relay,delay):
   webiopi.sleep(float(timeOn))
   Stat.onBool = False
   webiopi.debug("SOUND OFF")
+
  
 #*****
 # Sub Support functions
