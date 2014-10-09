@@ -5,10 +5,7 @@ import pygame
 import glob
 import random
 
-#Test
-
 webiopi.setDebug()
-
 
 # Called by WebIOPi at script loading
 def setup():
