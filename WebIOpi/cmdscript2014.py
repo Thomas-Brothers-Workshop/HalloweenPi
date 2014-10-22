@@ -78,9 +78,9 @@ def IOTEST(cmdString):
 @webiopi.macro
 def totalRelay(OnOff):
   if OnOff == "on":
-    relayOn()
+    relayOn(0)
   else:
-    relayOff()
+    relayOff(0)
 
 #*****
 # Main Command
@@ -266,13 +266,20 @@ def argSplit(argsIn):
   return argsIn.split(";")
 
 def testIO():
-  pass
+  relayOn(0.5)
+  webiopi.sleep(3.00)
+  relayOff(0.5)
 
-def relayOn():
-  pass
+def relayOn(delay):
+  for pin in range(1,relayMax):
+    Relaythread(pin,ON,"0","0")
+    webiopi.sleep(float(delay))
 
-def relayOff():
-  pass
+def relayOff(delay):
+  for pin in range(1,relayMax):
+    Relaythread(pin,OFF,"0","0")
+    webiopi.sleep(float(delay))
+    
 
 #Return random file for directory
 def GetSoundPath(dirStr):
