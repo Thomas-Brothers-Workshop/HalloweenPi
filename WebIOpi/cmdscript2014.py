@@ -72,7 +72,7 @@ def destroy():
 
 #cmd to test the GPIO expansions
 @webiopi.macro
-def IOTEST(cmdString):
+def IOTEST():
   testIO()
   return "TEST COMPLETE"
 
@@ -269,6 +269,7 @@ def argSplit(argsIn):
   return argsIn.split(";")
 
 def testIO():
+  relayOff(0)
   relayOn(0.5)
   webiopi.sleep(3.00)
   relayOff(0.5)
