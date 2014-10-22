@@ -179,7 +179,7 @@ def STEPevent(argString):
 
 #Run thread for Relay      
 def Relaythread(pin,status,sec,delay):
-  relay = null
+  relay = relay1
   #Select relay object and set logic pin
   if int(pin) <= 8:
     relay = relay1
