@@ -19,8 +19,8 @@ ON = GPIO.LOW
 
 # Relay modual setup
 relay1 = deviceInstance("relay1")
-relay2 = deviceInstance("relay2")
-relay3 = deviceInstance("relay3")
+#relay2 = deviceInstance("relay2")
+#relay3 = deviceInstance("relay3")
 relayMax = 24
 
 #Sound Setup
@@ -179,15 +179,16 @@ def STEPevent(argString):
 
 #Run thread for Relay      
 def Relaythread(pin,status,sec,delay):
+  relay = null
   #Select relay object and set logic pin
   if int(pin) <= 8:
     relay = relay1
     inPin = int(pin)-1
   elif int(pin) <= 16:
-    typeStr = relay2
+    relay = relay2
     inPin = int(pin)-9 
   elif int(pin) <= 24:
-    typeStr = relay3
+    relay = relay3
     inPin = int(pin)-17 
   else:
     webiopi.debug(tempList[0] + " is not a valid command")
