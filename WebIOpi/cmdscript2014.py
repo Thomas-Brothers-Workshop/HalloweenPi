@@ -185,10 +185,10 @@ def Relaythread(pin,status,sec,delay):
     relay = relay1
     inPin = int(pin)-1
   elif int(pin) <= 16:
-    relay = relay2
+    #relay = relay2
     inPin = int(pin)-9 
   elif int(pin) <= 24:
-    relay = relay3
+    #relay = relay3
     inPin = int(pin)-17 
   else:
     webiopi.debug(tempList[0] + " is not a valid command")
