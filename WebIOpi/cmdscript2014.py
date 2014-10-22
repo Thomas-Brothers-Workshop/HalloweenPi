@@ -21,6 +21,7 @@ ON = GPIO.LOW
 relay1 = deviceInstance("relay1")
 relay2 = deviceInstance("relay2")
 relay3 = deviceInstance("relay3")
+relayMax = 24
 
 #Sound Setup
 soundMain = "/home/pi/Hsounds/"
@@ -95,7 +96,7 @@ def cmd(cmdString):
   for cmd in cmdList:
     tempList = cmd.split("=")
     if (tempList[0].upper()) == "RELAY":
-      Relayevent(tempList[1])
+      RelayEvent(tempList[1])
     #elif (tempList[0].upper()) == "RGB":
       #RGBevent(tempList[1])
     #elif (tempList[0].upper()) == "PWM":
@@ -117,10 +118,16 @@ def cmd(cmdString):
 # Handler functions
 #*****
 
-def Relayevent(argString):
+def RelayEvent(argString):
   argList = argSplit(argString)
+  # Handle requests over the max amount of relays
+  if (int(argList[0]) > relayMax):
+    webiopi.debug(str(argList[0]) + " greater than the max value of " + str(relayMax))
+    return
+  #Work with status
   status = OFF
   if (argList[1].upper() == "ON"): status = ON
+  #pin,status,sec,delay
   threading.Thread(target=Relaythread,args=(argList[0],status,argList[2],argList[3],)).start()
 
 def SoundEvent(argString):
@@ -143,6 +150,7 @@ def SoundEvent(argString):
       webiopi.debug("Sound Path - " + soundPath)
       sound = pygame.mixer.Sound(soundPath)
       Stat.onBool = True
+      #Sound object, relay, delay
       threading.Thread(target=SoundThread,args=(sound,argList[1],argList[2],)).start()
 
 
@@ -171,12 +179,27 @@ def STEPevent(argString):
 
 #Run thread for Relay      
 def Relaythread(pin,status,sec,delay):
-  inPin = int(pin)-1 
+  #Select relay object and set logic pin
+  if int(pin) <= 8:
+    relay = relay1
+    inPin = int(pin)-1
+  elif int(pin) <= 16:
+    typeStr = relay2
+    inPin = int(pin)-9 
+  elif int(pin) <= 24:
+    typeStr = relay3
+    inPin = int(pin)-17 
+  else:
+    webiopi.debug(tempList[0] + " is not a valid command")
+    return "ERROR - " + tempList[0] + " is not a valid command"
+    
   #Handle delay in needed
   if (str(delay) != "0"):
     webiopi.sleep(float(delay))
+    
   #Write desired status
   relay.digitalWrite(inPin, status)
+  
   #If interval needed then wait and toggle
   if (str(sec) != "0"):
     webiopi.sleep(float(sec))
@@ -188,14 +211,21 @@ def Relaythread(pin,status,sec,delay):
 #****************************************************************
 #Run thread for Sound
 def SoundThread(sound,relay,delay):
+    
   #Handel delay if needed
-  webiopi.debug("SOUND ON")
   if (str(delay) != "0"):
     webiopi.sleep(float(delay))
+    
+  #Get Sound length
   timeOn = sound.get_length() + .5
+  
+  #Turn sound on for desired length and relay
+  webiopi.debug("SOUND ON")
   threading.Thread(target=Relaythread,args=(relay,ON,timeOn,"0.25",)).start()
   sound.play()
   webiopi.sleep(float(timeOn))
+  
+  #Sound has ended
   Stat.onBool = False
   webiopi.debug("SOUND OFF")
 
