@@ -21,7 +21,7 @@ ON = GPIO.LOW
 relay1 = deviceInstance("relay1")
 #relay2 = deviceInstance("relay2")
 #relay3 = deviceInstance("relay3")
-relayMax = 24
+relayMax = 16
 
 #Sound Setup
 soundMain = "/home/pi/Hsounds/"
@@ -183,12 +183,12 @@ def STEPevent(argString):
 def Relaythread(pin,status,sec,delay):
   relay = relay1
   #Select relay object and set logic pin
-  if int(pin) <= 8:
+  if int(pin) <= 16:
     relay = relay1
     inPin = int(pin)-1
-  elif int(pin) <= 16:
+  #elif int(pin) <= 16:
     #relay = relay2
-    inPin = int(pin)-9 
+    #inPin = int(pin)-9 
   elif int(pin) <= 24:
     #relay = relay3
     inPin = int(pin)-17 
