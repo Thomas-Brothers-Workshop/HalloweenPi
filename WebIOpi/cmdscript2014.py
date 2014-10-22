@@ -47,7 +47,7 @@ Stat = SoundStat()
 def setup():
   webiopi.debug("Halloween Macros - Start")
  
-  for num in range(0,7):
+  for num in range(0,15):
     relay1.setFunction(num, GPIO.OUT)
     
   # Setup GPIO
