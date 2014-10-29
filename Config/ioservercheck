@@ -1,0 +1,16 @@
+#!/bin/bash
+
+sleep 10
+#Check server status
+
+let ser=$(ps aux | grep -v grep | grep webiopi| wc -l)
+
+if [ "$ser" = '0' ];
+then
+        echo "WebIOPi Sever failed to start. Check /etc/webiopi/config and any macro code"
+        exit 1
+else
+        echo "WebIOPi Server Started on Port 8000"
+fi
+
+
