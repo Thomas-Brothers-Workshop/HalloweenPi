@@ -4,6 +4,7 @@ import threading
 import pygame
 import glob
 import random
+import os
 pygame.mixer.init()
 from webiopi import deviceInstance
 
@@ -19,12 +20,12 @@ ON = GPIO.LOW
 
 # Relay modual setup
 relay1 = deviceInstance("relay1")
-#relay2 = deviceInstance("relay2")
-#relay3 = deviceInstance("relay3")
-relayMax = 16
+relay2 = deviceInstance("relay2")
+relay3 = deviceInstance("relay3")
+relayMax = 24
 
 #Sound Setup
-soundMain = "/home/pi/Hsounds/"
+soundMain = str(os.path.dirname(os.path.realpath(__file__))) + "/Sound/"
 typeOne = "Type1/"
 typeTwo = "Type2/"
 typeThree = "Type3/"
@@ -47,11 +48,17 @@ Stat = SoundStat()
 def setup():
   webiopi.debug("Halloween Macros - Start")
  
-  for num in range(0,15):
+  #Set expander pins as outputs
+  for num in range(0,7):
     relay1.setFunction(num, GPIO.OUT)
+  for num in range(0,7):
+    relay2.setFunction(num, GPIO.OUT)
+  for num in range(0,7):
+    relay3.setFunction(num, GPIO.OUT)
     
   # Setup GPIO
   relayOff(0)
+  
 # Looped by WebIOPi
 def loop():
   # Do nothing
@@ -183,12 +190,12 @@ def STEPevent(argString):
 def Relaythread(pin,status,sec,delay):
   relay = relay1
   #Select relay object and set logic pin
-  if int(pin) <= 16:
+  if int(pin) <= 8:
     relay = relay1
     inPin = int(pin)-1
   #elif int(pin) <= 16:
-    #relay = relay2
-    #inPin = int(pin)-9 
+    relay = relay2
+    inPin = int(pin)-9 
   elif int(pin) <= 24:
     #relay = relay3
     inPin = int(pin)-17 
