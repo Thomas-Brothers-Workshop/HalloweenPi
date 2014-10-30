@@ -20,9 +20,9 @@ ON = GPIO.LOW
 
 # Relay modual setup
 relay1 = deviceInstance("relay1")
-relay2 = deviceInstance("relay2")
-relay3 = deviceInstance("relay3")
-relayMax = 24
+#relay2 = deviceInstance("relay2")
+#relay3 = deviceInstance("relay3")
+relayMax = 8
 
 #Sound Setup
 soundMain = str(os.path.dirname(os.path.realpath(__file__))) + "/Sound/"
@@ -51,10 +51,10 @@ def setup():
   #Set expander pins as outputs
   for num in range(0,7):
     relay1.setFunction(num, GPIO.OUT)
-  for num in range(0,7):
-    relay2.setFunction(num, GPIO.OUT)
-  for num in range(0,7):
-    relay3.setFunction(num, GPIO.OUT)
+  #for num in range(0,7):
+  #  relay2.setFunction(num, GPIO.OUT)
+  #for num in range(0,7):
+  #  relay3.setFunction(num, GPIO.OUT)
     
   # Setup GPIO
   relayOff(0)
@@ -194,7 +194,7 @@ def Relaythread(pin,status,sec,delay):
     relay = relay1
     inPin = int(pin)-1
   #elif int(pin) <= 16:
-    relay = relay2
+    #relay = relay2
     inPin = int(pin)-9 
   elif int(pin) <= 24:
     #relay = relay3
