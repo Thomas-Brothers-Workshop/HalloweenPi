@@ -1,7 +1,7 @@
 import webiopi
 import time
 import threading
-import pygame
+#import pygame
 import glob
 import random
 import os
@@ -157,10 +157,10 @@ def SoundEvent(argString):
     if typeStr != "":
       soundPath = GetSoundPath(soundMain + typeStr + "*.wav")
       webiopi.debug("Sound Path - " + soundPath)
-      sound = pygame.mixer.Sound(soundPath)
-      Stat.onBool = True
+      #sound = pygame.mixer.Sound(soundPath)
+      #Stat.onBool = True
       #Sound object, relay, delay
-      threading.Thread(target=SoundThread,args=(sound,argList[1],argList[2],)).start()
+      #threading.Thread(target=SoundThread,args=(sound,argList[1],argList[2],)).start()
 
 
 #*****
