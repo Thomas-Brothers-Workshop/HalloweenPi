@@ -85,9 +85,9 @@ multicast = true
 #light0 = TSL2561T
 #light1 = TSL2561T slave:0b0101001
 
-relay1 = MCP23017 slave:0x20
+relay3 = MCP23017 slave:0x20
 relay2 = MCP23017 slave:0x22
-relay3 = MCP23017 slave:0x24
+relay1 = MCP23017 slave:0x24
 
 #pwm = PCA9685
 #pwm1 = PCA9685 slave:0x41
