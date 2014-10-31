@@ -1,7 +1,7 @@
 import webiopi
 import time
 import threading
-#import pygame
+import pygame
 import glob
 import random
 import os
@@ -20,9 +20,9 @@ ON = GPIO.LOW
 
 # Relay modual setup
 relay1 = deviceInstance("relay1")
-#relay2 = deviceInstance("relay2")
-#relay3 = deviceInstance("relay3")
-relayMax = 8
+relay2 = deviceInstance("relay2")
+relay3 = deviceInstance("relay3")
+relayMax = 25 
 
 #Sound Setup
 soundMain = str(os.path.dirname(os.path.realpath(__file__))) + "/Sound/"
@@ -49,12 +49,12 @@ def setup():
   webiopi.debug("Halloween Macros - Start")
  
   #Set expander pins as outputs
-  for num in range(0,7):
+  for num in range(0,8):
     relay1.setFunction(num, GPIO.OUT)
-  #for num in range(0,7):
-  #  relay2.setFunction(num, GPIO.OUT)
-  #for num in range(0,7):
-  #  relay3.setFunction(num, GPIO.OUT)
+  for num in range(0,8):
+    relay2.setFunction(num, GPIO.OUT)
+  for num in range(0,8):
+    relay3.setFunction(num, GPIO.OUT)
     
   # Setup GPIO
   relayOff(0)
@@ -130,7 +130,7 @@ def cmd(cmdString):
 def RelayEvent(argString):
   argList = argSplit(argString)
   # Handle requests over the max amount of relays
-  if (int(argList[0]) > relayMax):
+  if (int(argList[0]) >= relayMax):
     webiopi.debug(str(argList[0]) + " greater than the max value of " + str(relayMax))
     return
   #Work with status
@@ -157,11 +157,11 @@ def SoundEvent(argString):
     if typeStr != "":
       soundPath = GetSoundPath(soundMain + typeStr + "*.wav")
       webiopi.debug("Sound Path - " + soundPath)
-      #sound = pygame.mixer.Sound(soundPath)
-      #Stat.onBool = True
+      sound = pygame.mixer.Sound(soundPath)
+      Stat.onBool = True
+     
       #Sound object, relay, delay
-      #threading.Thread(target=SoundThread,args=(sound,argList[1],argList[2],)).start()
-
+      threading.Thread(target=SoundThread,args=(sound,argList[1],argList[2],)).start()
 
 #*****
 # Future functions
@@ -193,11 +193,11 @@ def Relaythread(pin,status,sec,delay):
   if int(pin) <= 8:
     relay = relay1
     inPin = int(pin)-1
-  #elif int(pin) <= 16:
-    #relay = relay2
+  elif int(pin) <= 16:
+    relay = relay2
     inPin = int(pin)-9 
   elif int(pin) <= 24:
-    #relay = relay3
+    relay = relay3
     inPin = int(pin)-17 
   else:
     webiopi.debug(tempList[0] + " is not a valid command")
@@ -208,6 +208,7 @@ def Relaythread(pin,status,sec,delay):
     webiopi.sleep(float(delay))
     
   #Write desired status
+  webiopi.debug("Writing to pin " + str(inPin))
   relay.digitalWrite(inPin, status)
   
   #If interval needed then wait and toggle
@@ -288,6 +289,7 @@ def relayOn(delay):
 
 def relayOff(delay):
   for pin in range(1,relayMax):
+    webiopi.debug("Off Pin Iteration: " + str(pin))
     Relaythread(pin,OFF,"0","0")
     webiopi.sleep(float(delay))
     

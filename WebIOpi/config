@@ -24,7 +24,7 @@
 #   each sourcefile may have setup, loop and destroy functions and macros
 #myscript = /home/pi/webiopi/examples/scripts/macros/script.py
 #hallow = /home/pi/Halloween/WebIOpi/test.py
-hallow = /home/pi/Halloween/WebIOpi/cmdscript2014.py
+hallow = /home/pi/HalloweenPi/WebIOpi/cmdscript2014.py
 #------------------------------------------------------------------------#
 
 [HTTP]
@@ -85,9 +85,9 @@ multicast = true
 #light0 = TSL2561T
 #light1 = TSL2561T slave:0b0101001
 
-#relay3 = MCP23017 slave:0x20
-#relay2 = MCP23017 slave:0x22
-relay1 = MCP23017 slave:0x24
+relay3 = MCP23008 slave:0x20
+relay2 = MCP23008 slave:0x21
+relay1 = MCP23008 slave:0x22
 
 #pwm = PCA9685
 #pwm1 = PCA9685 slave:0x41

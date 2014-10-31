@@ -5,8 +5,8 @@
 sudo /etc/init.d/webiopi stop
 echo "Configuring Files"
 sudo rm /etc/webiopi/config
-sudo cp /home/pi/Halloween/WebIOpi/config /etc/webiopi/config
+sudo cp /home/pi/HalloweenPi/WebIOpi/config /etc/webiopi/config
  
-echo "Starting Halloween Server"
-sudo /etc/init.d/webiopi start
-
+#echo "Starting Halloween Server"
+#sudo /etc/init.d/webiopi start
+echo "Test - Start Manually"
